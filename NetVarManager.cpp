@@ -1,5 +1,7 @@
 #include <iomanip>
-#include "Main.h"
+#include <strings.h>
+#include "NetVarManager.h"
+#include "Hooks.h"
 
 using namespace std;
 

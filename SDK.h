@@ -1,23 +1,22 @@
 #ifndef SDK_H_INCLUDED
 #define SDK_H_INCLUDED
+
+#include "random"
 #include "Vector.h"
 
 /////////////////////////////////////////////
 //not sure who to credit for this, sorry :'(
 /////////////////////////////////////////////
-inline void**& getvtable(void* inst, size_t offset = 0)
-{
+inline void**& getvtable(void* inst, size_t offset = 0) {
     return *reinterpret_cast<void***>((size_t)inst + offset);
 }
 
-inline const void** getvtable(const void* inst, size_t offset = 0)
-{
+inline const void** getvtable(const void* inst, size_t offset = 0) {
     return *reinterpret_cast<const void***>((size_t)inst + offset);
 }
 
 template<typename Fn>
-inline Fn getvfunc(const void* inst, size_t index, size_t offset = 0)
-{
+inline Fn getvfunc(const void* inst, size_t index, size_t offset = 0) {
     return reinterpret_cast<Fn>(getvtable(inst, offset)[index]);
 }
 

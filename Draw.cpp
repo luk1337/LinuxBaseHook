@@ -1,4 +1,10 @@
-#include "Main.h"
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <stdlib.h>
+#include <stdarg.h>
+#include "Draw.h"
+#include "Hooks.h"
 
 void CDraw::InitFont(int size, const char* name) {
     font = g_pSurface->CreateFont();
@@ -36,15 +42,14 @@ void CDraw::DrawString(bool center, int x, int y, int r, int g, int b, int a, co
 
     va_list va_args;
     va_start(va_args, text);
-    vsprintf (szBuffer, text,  va_args);
-
+    vsprintf(szBuffer, text,  va_args);
 
     if (center)
         x -= WidthCalc(szBuffer) / 2;
 
-    g_pSurface->DrawSetTextColor (r, g, b, a);
-    g_pSurface->DrawSetTextFont (font);
-    g_pSurface->DrawSetTextPos (x, y);
+    g_pSurface->DrawSetTextColor(r, g, b, a);
+    g_pSurface->DrawSetTextFont(font);
+    g_pSurface->DrawSetTextPos(x, y);
 
     std::wstring wide = stringToWide(std::string(szBuffer));
     g_pSurface->DrawPrintText (wide.c_str(), wide.length());

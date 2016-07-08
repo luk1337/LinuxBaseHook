@@ -2,6 +2,10 @@
 #define NETVARMANAGER_H_INCLUDED
 
 #include <fstream>
+#include <vector>
+#include "SDK.h"
+
+struct RecvProp;
 
 class DVariant {
 public:
@@ -24,7 +28,6 @@ public:
 
 typedef void(*RecvVarProxyFn)(const CRecvProxyData *pData, void *pStruct, void *pOut);
 
-struct RecvProp;
 struct RecvTable {
     RecvProp *m_pProps;
     int m_nProps;
