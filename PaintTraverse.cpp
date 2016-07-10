@@ -11,7 +11,7 @@ void Hooks::PaintTraverse(void* v1, unsigned long long vguiPanel, bool forceRepa
     if (name && name[0] == 'M' && name[2] == 't') {
         static bool bDidOnce = false;
         if(!bDidOnce) {
-            g_Draw.InitFont(12, "Tahoma");
+            g_Draw.InitFont(12, "Arial");
             bDidOnce = true;
         }
 
