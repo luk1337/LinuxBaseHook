@@ -3,6 +3,7 @@
 
 #include "random"
 #include "Vector.h"
+#include "Offsets.h"
 
 /////////////////////////////////////////////
 //not sure who to credit for this, sorry :'(
@@ -24,11 +25,11 @@ class ICollideable
 {
 public:
     Vector& OBBMins() {
-        return *(Vector*)((unsigned long long)this + 0x00000010);
+        return *(Vector*)((unsigned long long)this + offsets.m_VecMins);
     }
 
     Vector& OBBMaxs() {
-        return *(Vector*)((unsigned long long)this + 0x0000001C);
+        return *(Vector*)((unsigned long long)this + offsets.m_VecMaxs);
     }
 };
 
@@ -36,27 +37,27 @@ class CBaseEntity
 {
 public:
     int GetHealth() {
-        return *(int*)(this + 0x0000012C);
+        return *(int*)(this + offsets.m_iHealth);
     }
 
     int GetTeamNum() {
-        return *(int*)(this + 0x000000120);
+        return *(int*)(this + offsets.m_iTeamNum);
     }
 
     bool GetAlive() {
-        return (bool)(*(int*)(this + 0x0000028B));
+        return (bool)(*(int*)(this + offsets.m_lifeState));
     }
 
     bool GetDormant() {
-        return (bool)(*(int*)(this + 0x00000119));
+        return (bool)(*(int*)(this + offsets.m_bDormant));
     }
 
     Vector GetOrigin() {
-        return *(Vector*)((unsigned long long)this + 0x00000164);
+        return *(Vector*)((unsigned long long)this + offsets.m_vecOrigin);
     }
 
     ICollideable* GetCollideable() {
-        return (ICollideable*)(this + 0x00000370);
+        return (ICollideable*)(this + offsets.m_Collision);
     }
 };
 class CEngineClient

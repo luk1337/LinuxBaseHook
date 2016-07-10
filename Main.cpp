@@ -81,7 +81,10 @@ void inithooks() {
     Utils::SetupInterfaces();
     Utils::SetupHooks();
 
+    NetVarManager->Initialize();
     NetVarManager->DumpNetvars("/home/luk/.steam/steam/steamapps/common/Counter-Strike Global Offensive/netvars.txt");
+
+    Offsets::GrabOffsets();
 
     unsigned long int uintPanel = reinterpret_cast<unsigned long long>(g_pPanel);
     DoPTHook(&uintPanel);
