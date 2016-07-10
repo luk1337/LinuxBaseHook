@@ -11,6 +11,10 @@ bool Utils::WorldToScreen(const Vector &vOrigin, Vector &vScreen) {
 void Utils::SetupInterfaces() {
     Client = (CreateInterfaceFn)dlsym(dlopen("./csgo/bin/linux64/client_client.so", RTLD_NOW), "CreateInterface");
     Engine = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/engine_client.so", RTLD_NOW), "CreateInterface");
+    InputSystem = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/inputsystem_client.so", RTLD_NOW), "CreateInterface");
+    MaterialSystem = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/materialsystem_client.so", RTLD_NOW), "CreateInterface");
+    Physprops = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/vphysics_client.so", RTLD_NOW), "CreateInterface");
+    StudioRender = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/studiorender_client.so", RTLD_NOW), "CreateInterface");
     VGUI = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/vguimatsurface_client.so", RTLD_NOW), "CreateInterface");
     VGUI2 = (CreateInterfaceFn)dlsym(dlopen("./bin/linux64/vgui2_client.so", RTLD_NOW), "CreateInterface");
 }
