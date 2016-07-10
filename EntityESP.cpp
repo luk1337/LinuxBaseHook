@@ -47,10 +47,6 @@ void EntityESP::DrawNameESP(CBaseEntity* entity, int index) {
         CEngineClient::player_info_t pInfo;
         g_pEngine->GetPlayerInfo(index, &pInfo);
 
-        // Calculate the box width and height
-        float height = (vPos.y - vTop.y);
-        float width = height / 4.f;
-
         // Draw name ESP
         g_Draw.DrawString(true, vTop.x, vTop.y, r, g, b, 255, pInfo.name);
     }
