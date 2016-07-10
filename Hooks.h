@@ -13,4 +13,11 @@ extern IPanel* g_pPanel;
 
 extern CDraw g_Draw;
 
+using PaintTraverseFn = void(*)(void*, unsigned long long, bool, bool);
+extern PaintTraverseFn oPaintTraverse;
+
+namespace Hooks {
+    extern void PaintTraverse(void* v1, unsigned long long vguiPanel, bool forceRepaint, bool allowForce);
+}
+
 #endif //BASEHOOK_HOOKS_H

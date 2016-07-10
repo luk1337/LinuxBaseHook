@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Interfaces.h"
 #include "Hooks.h"
+#include "VTableHook.h"
 
 bool Utils::WorldToScreen(const Vector &vOrigin, Vector &vScreen) {
     return g_pDebugOverlay->ScreenPosition(vOrigin, vScreen);
@@ -21,4 +22,6 @@ void Utils::SetupHooks() {
     g_pDebugOverlay = (CDebugOverlay*)Engine("VDebugOverlay004", NULL);
     g_pSurface = (ISurface*)VGUI("VGUI_Surface031", NULL);
     g_pPanel = (IPanel*)VGUI2("VGUI_Panel009", NULL);
+
+    oPaintTraverse = (PaintTraverseFn)vtablehook_hook(g_pPanel, (void*)Hooks::PaintTraverse, 42);
 }
