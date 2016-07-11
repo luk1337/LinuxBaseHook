@@ -2,8 +2,9 @@
 #include <cstdio>
 #include <cstring>
 #include <thread>
+#include <zconf.h>
+#include <pwd.h>
 #include "NetVarManager.h"
-#include "Utils.h"
 
 // Linux basehook by Atex 6.7.2016
 // Do not sell stuff based on this, quite demotivating. Also remember to give credit where it is due.
@@ -14,11 +15,17 @@
 void inithooks() {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
+    struct passwd *pw = getpwuid(getuid());
+    const char *homedir = pw->pw_dir;
+
+    char* netvarsOutput;
+    asprintf(&netvarsOutput, "%s/%s", homedir, ".steam/steam/steamapps/common/Counter-Strike Global Offensive/netvars.txt");
+
     Utils::SetupInterfaces();
     Utils::SetupHooks();
 
     NetVarManager->Initialize();
-    NetVarManager->DumpNetvars("/home/luk/.steam/steam/steamapps/common/Counter-Strike Global Offensive/netvars.txt");
+    NetVarManager->DumpNetvars(netvarsOutput);
 
     Offsets::GrabOffsets();
 }
