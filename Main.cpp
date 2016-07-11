@@ -12,7 +12,7 @@
 // If I have forgotten you just hit me up.
 // Sorry for the "bad" code. Somewhat intentional to make expanding on this a little harder if ur a complete spastic. For example no class for vmt hooking.
 
-void inithooks() {
+void init() {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     struct passwd *pw = getpwuid(getuid());
@@ -31,9 +31,7 @@ void inithooks() {
 }
 
 void __attribute__((constructor)) start() {
-    std::thread inithack(inithooks);
-    inithack.detach();
+    std::thread (init).detach();
 }
 
-void __attribute__((destructor)) end() {
-}
+void __attribute__((destructor)) end();
