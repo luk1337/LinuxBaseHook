@@ -4,22 +4,7 @@
 #include "random"
 #include "Vector.h"
 #include "Offsets.h"
-
-/////////////////////////////////////////////
-//not sure who to credit for this, sorry :'(
-/////////////////////////////////////////////
-inline void**& getvtable(void* inst, size_t offset = 0) {
-    return *reinterpret_cast<void***>((size_t)inst + offset);
-}
-
-inline const void** getvtable(const void* inst, size_t offset = 0) {
-    return *reinterpret_cast<const void***>((size_t)inst + offset);
-}
-
-template<typename Fn>
-inline Fn getvfunc(const void* inst, size_t index, size_t offset = 0) {
-    return reinterpret_cast<Fn>(getvtable(inst, offset)[index]);
-}
+#include "Utils.h"
 
 class ICollideable
 {
@@ -76,72 +61,72 @@ public:
 
     void GetScreenSize(int& width, int& height) {
         typedef void(* OriginalFn)(void*, int& , int&);
-        return getvfunc<OriginalFn>(this, 5)(this, width, height);
+        return Utils::GetVFunc<OriginalFn>(this, 5)(this, width, height);
     }
 
     bool GetPlayerInfo(int ent_num, player_info_t *pinfo) {
         typedef bool(* OriginalFn)(void*, int, player_info_t *);
-        return getvfunc<OriginalFn>(this, 8)(this, ent_num, pinfo);
+        return Utils::GetVFunc<OriginalFn>(this, 8)(this, ent_num, pinfo);
     }
 
     bool Con_IsVisible(void) {
         typedef bool(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 11)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 11)(this);
     }
 
     int GetLocalPlayer(void) {
         typedef int(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 12)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 12)(this);
     }
 
     float Time(void) {
         typedef float(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 14)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 14)(this);
     }
 
     void GetViewAngles(Vector& va) {
         typedef void(* OriginalFn)(void*, Vector& va);
-        return getvfunc<OriginalFn>(this, 19)(this, va);
+        return Utils::GetVFunc<OriginalFn>(this, 19)(this, va);
     }
 
     void SetViewAngles(Vector& va) {
         typedef void(* OriginalFn)(void*, Vector& va);
-        return getvfunc<OriginalFn>(this, 20)(this, va);
+        return Utils::GetVFunc<OriginalFn>(this, 20)(this, va);
     }
 
     int GetMaxClients(void) {
         typedef int(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 21)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 21)(this);
     }
 
     bool IsInGame(void) {
         typedef bool(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 26)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 26)(this);
     }
 
     bool IsConnected(void) {
         typedef bool(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 27)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 27)(this);
     }
 
     bool IsDrawingLoadingImage(void) {
         typedef bool(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 28)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 28)(this);
     }
 
     const matrix3x4_t& WorldToScreenMatrix(void) {
         typedef const matrix3x4_t&(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 36)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 36)(this);
     }
 
     bool IsTakingScreenshot(void) {
         typedef bool(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 85)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 85)(this);
     }
 
     void ClientCmd_Unrestricted(const char* chCommandString) {
         typedef void(* OriginalFn)(void*, const char *);
-        return getvfunc<OriginalFn>(this, 106)(this, chCommandString);
+        return Utils::GetVFunc<OriginalFn>(this, 106)(this, chCommandString);
     }
 };
 
@@ -150,7 +135,7 @@ class CEntityList
 public:
     CBaseEntity* GetClientEntity(int index) {
         typedef CBaseEntity*(* OriginalFn)(void*, int);
-        return getvfunc<OriginalFn>(this, 3)(this, index);
+        return Utils::GetVFunc<OriginalFn>(this, 3)(this, index);
     }
 };
 
@@ -159,7 +144,7 @@ class CDebugOverlay
 public:
     bool ScreenPosition(const Vector& vIn, Vector& vOut) {
         typedef bool(* OriginalFn)(void*, const Vector&, Vector&);
-        return getvfunc<OriginalFn>(this, 11)(this, vIn, vOut);
+        return Utils::GetVFunc<OriginalFn>(this, 11)(this, vIn, vOut);
     }
 };
 
@@ -168,72 +153,72 @@ class ISurface
 public:
     void DrawSetColor(int r, int g, int b, int a) {
         typedef void(* OriginalFn)(void*, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 14)(this, r, g, b, a);
+        return Utils::GetVFunc<OriginalFn>(this, 14)(this, r, g, b, a);
     }
 
     void DrawFilledRect(int x0, int y0, int x1, int y1) {
         typedef void(* OriginalFn)(void*, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 16)(this, x0, y0, x1, y1);
+        return Utils::GetVFunc<OriginalFn>(this, 16)(this, x0, y0, x1, y1);
     }
 
     void DrawOutlinedRect(int x0, int y0, int x1, int y1) {
         typedef void(* OriginalFn)(void*, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 18)(this, x0, y0, x1, y1);
+        return Utils::GetVFunc<OriginalFn>(this, 18)(this, x0, y0, x1, y1);
     }
 
     void DrawLine(int x0, int y0, int x1, int y1) {
         typedef void(* OriginalFn)(void*, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 19)(this, x0, y0, x1, y1);
+        return Utils::GetVFunc<OriginalFn>(this, 19)(this, x0, y0, x1, y1);
     }
 
     void DrawPolyLine(int *px, int *py, int numPoints) {
         typedef void(* OriginalFn)(void*, int*, int*, int);
-        return getvfunc<OriginalFn>(this, 20)(this, px, py, numPoints);
+        return Utils::GetVFunc<OriginalFn>(this, 20)(this, px, py, numPoints);
     }
 
     void DrawSetTextFont(unsigned long long font) {
         typedef void(* OriginalFn)(void*, unsigned long long);
-        return getvfunc<OriginalFn>(this, 23)(this, font);
+        return Utils::GetVFunc<OriginalFn>(this, 23)(this, font);
     }
 
     void DrawSetTextColor(int r, int g, int b, int a) {
         typedef void(* OriginalFn)(void*, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 24)(this, r, g, b, a);
+        return Utils::GetVFunc<OriginalFn>(this, 24)(this, r, g, b, a);
     }
 
     void DrawSetTextPos(int x, int y) {
         typedef void(* OriginalFn)(void*, int, int);
-        return getvfunc<OriginalFn>(this, 26)(this, x, y);
+        return Utils::GetVFunc<OriginalFn>(this, 26)(this, x, y);
     }
 
     void DrawPrintText(const wchar_t *text, int textLen) {
         typedef void(* OriginalFn)(void*, const wchar_t *, int, int);
-        return getvfunc<OriginalFn>(this, 28)(this, text, textLen, 0);
+        return Utils::GetVFunc<OriginalFn>(this, 28)(this, text, textLen, 0);
     }
 
     void DrawSetTextureRGBA(int id, const unsigned char *rgba, int wide, int tall) {
         typedef void(* OriginalFn)(void*, int, const unsigned char*, int, int);
-        return getvfunc<OriginalFn>(this, 37)(this, id, rgba, wide, tall);
+        return Utils::GetVFunc<OriginalFn>(this, 37)(this, id, rgba, wide, tall);
     }
 
     void DrawSetTexture(int id) {
         typedef void(* OriginalFn)(void*, int);
-        return getvfunc<OriginalFn>(this, 38)(this, id);
+        return Utils::GetVFunc<OriginalFn>(this, 38)(this, id);
     }
 
     unsigned long long CreateFont() {
         typedef unsigned long long(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 71)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 71)(this);
     }
 
     void SetFontGlyphSet(unsigned long long &font, const char *FontName, int tall, int weight, int blur, int scanlines, int flags) {
         typedef void(* OriginalFn)(void*, unsigned long long, const char*, int, int, int, int, int, int, int);
-        return getvfunc<OriginalFn>(this, 72)(this, font, FontName, tall, weight, blur, scanlines, flags, 0, 0);
+        return Utils::GetVFunc<OriginalFn>(this, 72)(this, font, FontName, tall, weight, blur, scanlines, flags, 0, 0);
     }
 
     void GetTextSize(unsigned long long font, const wchar_t *text, int &wide, int &tall) {
         typedef void(* OriginalFn)(void*, unsigned long long font, const wchar_t *text, int &wide, int &tall);
-        return getvfunc<OriginalFn>(this, 79)(this, font, text, wide, tall);
+        return Utils::GetVFunc<OriginalFn>(this, 79)(this, font, text, wide, tall);
     }
 };
 
@@ -242,7 +227,7 @@ class IPanel
 public:
     const char *GetName(unsigned long long vguiPanel) {
         typedef const char* (* OriginalFn)(void*, unsigned long long);
-        return getvfunc<OriginalFn>(this, 37)(this, vguiPanel);
+        return Utils::GetVFunc<OriginalFn>(this, 37)(this, vguiPanel);
     }
 };
 
@@ -288,7 +273,7 @@ public:
 
     ClientClass* GetAllClasses() {
      	typedef ClientClass*(* OriginalFn)(void*);
-        return getvfunc<OriginalFn>(this, 8)(this);
+        return Utils::GetVFunc<OriginalFn>(this, 8)(this);
     }
 };
 
